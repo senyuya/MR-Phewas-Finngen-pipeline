@@ -1,5 +1,5 @@
 # MR-Phewas-Finngen-pipeline
-# FinnGen R12 GWAS Downloader 
+## FinnGen R12 GWAS Downloader 
 
 Minimal utilities to 
 (1) filter the public FinnGen R12 manifest and (2) batch-download summary statistics from the `path_https` column.  
@@ -14,3 +14,19 @@ This repository **does not** include any GWAS data—only small helper scripts.
 - Ready for local runs or Slurm submission on HPC
 
 ---
+## Project structure
+.
+├── filter_manifest_simple.py # Filter the original TSV manifest
+├── downloadFinngenGwas.py # Download files listed in path_https
+├── download_finngen.sh # Slurm job script (calls the downloader)
+├── requirements.txt # Python dependencies
+└── .gitignore # Prevent committing logs/large data
+---
+
+## Requirements
+- Python 3.9+
+- Packages:
+  - `pandas >= 1.3`
+  - `requests >= 2.31`
+  - `openpyxl >= 3.1` (only needed if you read Excel `.xlsx`)
+- Sufficient disk space for large GWAS files
