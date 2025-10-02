@@ -14,13 +14,6 @@ This repository **does not** include any GWAS data—only small helper scripts.
 - Ready for local runs or Slurm submission on HPC
 
 ---
-## Project structure
-.
-├── filter_manifest_simple.py     # Filter the original TSV manifest
-├── downloadFinngenGwas.py        # Download files listed in path_https
-├── download_finngen.sh           # Slurm job script
-└── .gitignore                    # Prevent committing logs/large data
-
 
 ## Requirements
 - Python 3.9+
