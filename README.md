@@ -16,12 +16,11 @@ This repository **does not** include any GWAS data—only small helper scripts.
 ---
 ## Project structure
 .
-├── filter_manifest_simple.py # Filter the original TSV manifest
-├── downloadFinngenGwas.py # Download files listed in path_https
-├── download_finngen.sh # Slurm job script (calls the downloader)
-├── requirements.txt # Python dependencies
-└── .gitignore # Prevent committing logs/large data
----
+├── filter_manifest_simple.py     # Filter the original TSV manifest
+├── downloadFinngenGwas.py        # Download files listed in path_https
+├── download_finngen.sh           # Slurm job script
+└── .gitignore                    # Prevent committing logs/large data
+
 
 ## Requirements
 - Python 3.9+
