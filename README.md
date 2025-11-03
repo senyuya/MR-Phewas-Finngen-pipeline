@@ -2,7 +2,7 @@
 
 Minimal utilities for working with **FinnGen R12** summary statistics:
 (1) filter the public FinnGen R12 manifest and batch-download summary statistics from the `path_https` column.  
-(2)  extract rows by a **list of rsIDs** (“Filter SNPs”),
+(2)  extract rows by a **list of rsIDs** (“Filter SNPs”)
 (3) (coming soon) run **MR-PheWAS** on the filtered variants.
 
 No GWAS data are included in this repository—only small helper scripts.
