@@ -1,30 +1,49 @@
 # MR-Phewas-Finngen-pipeline
 
 Minimal utilities for working with **FinnGen R12** summary statistics:
-(1) filter the public FinnGen R12 manifest and batch-download summary statistics from the `path_https` column.  
-(2)  extract rows by a **list of rsIDs** (“Filter SNPs”)
-(3) (coming soon) run **MR-PheWAS** on the filtered variants.
+1) filter the public FinnGen R12 manifest and batch-download sumstats  
+2) extract rows by a **list of rsIDs** (“Filter SNPs”)  
+3) (coming soon) run **MR-PheWAS** on the filtered variants
 
-No GWAS data are included in this repository—only small helper scripts.
+No GWAS data are included in this repository — only small helper scripts.
+
+---
 
 ## Quickstart
+
 ### Step 1 — Download (after filtering the manifest)
-### Features
-- Keep phenotypes with `num_cases >= 1000` and `num_controls != 0`
-- Save a filtered manifest as TSV (same columns as the original)
-- Download `.gz` files listed in `path_https` (skips files that already exist)
-- Ready for local runs or Slurm submission on HPC
 
-python scripts/downloadFinngenGwas.py
-or: sbatch download_finngen.sh
+**Features**
+- keep phenotypes with `num_cases >= 1000` and `num_controls != 0`  
+- save a filtered manifest as TSV (same columns as original)  
+- download `.gz` from `path_https` (skip existing files)  
+- works locally or via Slurm on HPC
 
-### Step 2 — Filter SNPs (rsID list from your MR table's column `SNP/RSID/...`)
-**Goal:** Given a list of rsIDs, extract matching rows from each FinnGen summary-statistics file.
-python scripts/Filter_SNPs.py     # edit paths at the top of the script
-or: sbatch Filter_SNPs.sh
+**Run**
+    
+    python scripts/downloadFinngenGwas.py
 
-### Step 3 — Run MR-PheWAS (placeholder; to be added)
-### Rscript scripts/run_mr_phewas.R --inputs ...  (TBD)
+or（HPC）：
+    
+    sbatch download_finngen.sh
+
+---
+
+### Step 2 — Filter SNPs (rsID list from your MR table’s first column `SNP`)
+
+**Goal**  
+Given a list of rsIDs, extract matching rows from each FinnGen summary-statistics file.
+
+**Run**
+    
+    python scripts/Filter_SNPs.py # edit paths at the top of the script
+
+or（HPC）：
+    
+    sbatch Filter_SNPs.sh     
+
+
+### Step 3 — Run MR-PheWAS (placeholder)
 
 ---
 
