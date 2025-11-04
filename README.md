@@ -43,7 +43,9 @@ or（HPC）：
     sbatch Filter_SNPs.sh     
 
 
-### Step 3 — Run MR-PheWAS (placeholder)
+### Step 3 — Run MR-PheWAS 
+
+### Step 4 — Make Figure
 
 ---
 
