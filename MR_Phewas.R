@@ -23,27 +23,44 @@ OUTCOME_DIR   <- "extracted_snps_panos"              # folder with extracted Fin
 # ============================================================================
 # 1. MR analysis helper
 # ============================================================================
-MR_function <- function(exposure.data, outcome.data) {
-  # Harmonize
-  final.data <- harmonise_data(exposure.data, outcome.data, action = 1)
-  final.data <- final.data[!duplicated(final.data), ]
+MR_function <- function(exposure.data, outcome.data, harmonise_action = 1) {
+  library(dplyr)
   
-  # MR methods
-  results <- mr(final.data, method_list = c("mr_ivw_fe", "mr_ivw", "mr_egger_regression", "mr_weighted_median"))
+  # 1) Harmonise
+  final.data <- harmonise_data(exposure.data, outcome.data, action = harmonise_action) %>%
+    distinct()
   
-  # Heterogeneity & pleiotropy
+  # 2) MR
+  results <- mr(final.data,
+                method_list = c("mr_ivw_fe", "mr_ivw", "mr_egger_regression", "mr_weighted_median"))
+  
+  # 3) Diagnostics
   heterogeneity <- mr_heterogeneity(final.data)
   pleiotropy    <- mr_pleiotropy_test(final.data)
   
-  # Join diagnostics
-  ivw_qpval <- heterogeneity$Q_pval[heterogeneity$method == "Inverse variance weighted"]
-  results$IVW.Qpval             <- ivw_qpval
-  results$pleiotropy.pval       <- pleiotropy$pval
-  results$pleiotropy.intercept  <- pleiotropy$egger_intercept
-  results$pleiotropy.se         <- pleiotropy$se
+  # ---- 3a) 
+  het_ivw <- heterogeneity %>%
+    filter(method == "Inverse variance weighted") %>%
+    transmute(id.exposure, id.outcome,
+              IVW.Q = Q,
+              IVW.Q_df = Q_df,
+              IVW.Qpval = Q_pval)
+  
+  # ---- 3b) Egger intercept 
+  ple <- pleiotropy %>%
+    transmute(id.exposure, id.outcome,
+              pleiotropy.intercept = egger_intercept,
+              pleiotropy.se = se,
+              pleiotropy.pval = pval)
+  
+  # 4) 
+  results <- results %>%
+    left_join(het_ivw, by = c("id.exposure", "id.outcome")) %>%
+    left_join(ple,     by = c("id.exposure", "id.outcome"))
   
   results
 }
+
 
 # ============================================================================
 # 2. Load exposure data
